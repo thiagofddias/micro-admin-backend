@@ -26,7 +26,7 @@ export class CategoriesService {
     try {
       return await this.categoryModel.find().exec();
     } catch (error) {
-      this.logger.error(`error: ${JSON.stringify(error.message)}`);
+      this.logger.error(`Error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
@@ -35,7 +35,7 @@ export class CategoriesService {
     try {
       return await this.categoryModel.findOne({ _id }).exec();
     } catch (error) {
-      this.logger.error(`error: ${JSON.stringify(error.message)}`);
+      this.logger.error(`Error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }
@@ -46,7 +46,7 @@ export class CategoriesService {
         .findOneAndUpdate({ _id }, { $set: category })
         .exec();
     } catch (error) {
-      this.logger.error(`error: ${JSON.stringify(error.message)}`);
+      this.logger.error(`Error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
     }
   }

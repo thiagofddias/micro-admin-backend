@@ -24,7 +24,7 @@ export class PlayerService {
 
   async findAllPlayers(): Promise<Player[]> {
     try {
-      return await this.playerModel.find().populate('category').exec();
+      return await this.playerModel.find().exec();
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
@@ -33,10 +33,7 @@ export class PlayerService {
 
   async findPlayerFromId(_id: string): Promise<Player> {
     try {
-      return await this.playerModel
-        .findOne({ _id })
-        .populate('category')
-        .exec();
+      return await this.playerModel.findOne({ _id }).exec();
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);
@@ -45,6 +42,8 @@ export class PlayerService {
 
   async updatePlayer(_id: string, player: Player): Promise<void> {
     try {
+      console.log('player', player);
+      console.log('_id', _id);
       await this.playerModel.findOneAndUpdate({ _id }, { $set: player }).exec();
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
@@ -54,7 +53,7 @@ export class PlayerService {
 
   async deletePlayer(_id: string): Promise<void> {
     try {
-      await this.playerModel.deleteOne({ _id }).exec;
+      await this.playerModel.deleteOne({ _id }).exec();
     } catch (error) {
       this.logger.error(`error: ${JSON.stringify(error.message)}`);
       throw new RpcException(error.message);

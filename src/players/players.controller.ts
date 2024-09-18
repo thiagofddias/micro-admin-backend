@@ -75,4 +75,23 @@ export class PlayersController {
       }
     }
   }
+
+  @EventPattern('delete-player')
+  async deletePlayer(@Payload() _id: string, @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const originalMessage = context.getMessage();
+
+    try {
+      await this.playerService.deletePlayer(_id);
+      await channel.ack(originalMessage);
+    } catch (error) {
+      const filterAckError = ackErrors.filter((ackError) =>
+        error.message.includes(ackError),
+      );
+
+      if (filterAckError) {
+        await channel.ack(originalMessage);
+      }
+    }
+  }
 }
