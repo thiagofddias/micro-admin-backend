@@ -19,6 +19,7 @@ export class PlayersController {
 
   @EventPattern('create-player')
   async createPlayer(@Payload() player: Player, @Ctx() context: RmqContext) {
+    console.log('createPlayuer');
     const channel = context.getChannelRef();
     const originalMessage = context.getMessage();
     try {
@@ -41,6 +42,7 @@ export class PlayersController {
 
   @MessagePattern('consult-player')
   async consultPlayer(@Payload() _id: string, @Ctx() context: RmqContext) {
+    console.log('cheguei aqui');
     const channel = context.getChannelRef();
     const originalMessage = context.getMessage();
     try {
